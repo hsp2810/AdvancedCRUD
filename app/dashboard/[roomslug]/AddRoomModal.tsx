@@ -3,15 +3,15 @@ import { createRoom } from "@/app/actions/roomActions";
 const AddRoomModal = () => {
   return (
     <main>
-      <label className='btn btn-solid-secondary' htmlFor='modal-1'>
+      <label className='btn btn-solid-secondary' htmlFor='modal-addRoom'>
         Add a room
       </label>
-      <input className='modal-state' id='modal-1' type='checkbox' />
+      <input className='modal-state' id='modal-addRoom' type='checkbox' />
       <div className='modal'>
-        <label className='modal-overlay' htmlFor='modal-1'></label>
+        <label className='modal-overlay' htmlFor='modal-addRoom'></label>
         <div className='modal-content flex flex-col gap-5 py-[2.5rem] w-[23rem]'>
           <label
-            htmlFor='modal-1'
+            htmlFor='modal-addRoom'
             className='btn btn-sm btn-circle btn-ghost absolute right-2 top-2'
           >
             ✕
@@ -35,7 +35,7 @@ const AddRoomModal = () => {
             <div className='flex gap-3'>
               <button className='btn btn-solid-success btn-sm'>Create</button>
 
-              <label htmlFor='modal-1' className='btn btn-solid btn-sm'>
+              <label htmlFor='modal-addRoom' className='btn btn-solid btn-sm'>
                 Cancel
               </label>
             </div>

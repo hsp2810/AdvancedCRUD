@@ -28,12 +28,17 @@ export const authOptions: NextAuthOptions = {
 
         const isCorrectPassword = await bcrypt.compare(
           credentials.password,
-          user.password as string
+          user.password
         );
 
-        console.log("Password is correct");
+        console.log(user.password);
+        console.log(credentials.password);
+
+        console.log("Password is correct: ", isCorrectPassword);
 
         if (!isCorrectPassword) return null;
+
+        console.log("Returing the login user: ", user);
 
         return user;
       },

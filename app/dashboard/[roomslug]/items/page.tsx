@@ -3,6 +3,7 @@ import Card from "./Card";
 import Link from "next/link";
 import AddItemModal from "./AddItemModal";
 import prisma from "@/prisma/setup";
+import { Room } from "@prisma/client";
 
 interface PageProps {
   params: {
@@ -11,6 +12,7 @@ interface PageProps {
 }
 
 export default async function RoomItems({ params: { roomslug } }: PageProps) {
+  const room = await prisma.room.findUnique({ where: { slug: roomslug } });
   const items = await prisma.item.findMany({});
 
   return (
@@ -27,27 +29,20 @@ export default async function RoomItems({ params: { roomslug } }: PageProps) {
         </div>
       </div>
       <section>
-        <h1 className='text-3xl font-semibold ml-1'>Kitchen Items</h1>
+        <h1 className='text-3xl font-semibold ml-1'>
+          {room?.name.toUpperCase()} ITEMS
+        </h1>
       </section>
-      <section className='my-4 grid grid-cols-4 gap-4 h-[60vh] overflow-y-scroll'>
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+      <section className='my-4  h-[60vh] overflow-y-scroll'>
+        {items.length === 0 ? (
+          <>No items found. Add one</>
+        ) : (
+          <div className='grid grid-cols-4 gap-4'>
+            {items.map((item) => {
+              return <Card key={item.id} item={item} room={room as Room} />;
+            })}
+          </div>
+        )}
       </section>
     </main>
   );

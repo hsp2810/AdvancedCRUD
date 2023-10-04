@@ -3,15 +3,15 @@ import { createItem } from "@/app/actions/itemActions";
 const AddItemModal = ({ roomslug }: { roomslug: string }) => {
   return (
     <main>
-      <label className='btn btn-solid-secondary' htmlFor='modal-1'>
+      <label className='btn btn-solid-secondary' htmlFor='modal-addItem'>
         Add Item
       </label>
-      <input className='modal-state' id='modal-1' type='checkbox' />
+      <input className='modal-state' id='modal-addItem' type='checkbox' />
       <div className='modal'>
-        <label className='modal-overlay' htmlFor='modal-1'></label>
+        <label className='modal-overlay' htmlFor='modal-addItem'></label>
         <div className='modal-content flex flex-col gap-5 py-[2.5rem] w-[23rem]'>
           <label
-            htmlFor='modal-1'
+            htmlFor='modal-addItem'
             className='btn btn-sm btn-circle btn-ghost absolute right-2 top-2'
           >
             ✕
@@ -25,8 +25,8 @@ const AddItemModal = ({ roomslug }: { roomslug: string }) => {
             <input
               className='input'
               type='hidden'
-              name=''
-              defaultValue={roomslug}
+              name='roomslug'
+              value={roomslug}
             />
             <input
               className='input'
@@ -44,7 +44,7 @@ const AddItemModal = ({ roomslug }: { roomslug: string }) => {
                 Create Item
               </button>
 
-              <label htmlFor='modal-1' className='btn btn-solid btn-sm'>
+              <label htmlFor='modal-addItem' className='btn btn-solid btn-sm'>
                 Cancel
               </label>
             </div>

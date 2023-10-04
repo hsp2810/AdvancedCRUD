@@ -3,7 +3,6 @@
 import { LoginUser } from "@/types";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const defUser: LoginUser = {
@@ -13,7 +12,6 @@ const defUser: LoginUser = {
 
 export default function Login() {
   const [user, setUser] = useState<LoginUser>(defUser);
-  const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();

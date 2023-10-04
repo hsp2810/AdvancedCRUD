@@ -1,7 +1,57 @@
+"use client";
+
+import { RegisterUser } from "@/types";
+import { User } from "@prisma/client";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+
+const defUser: RegisterUser = {
+  name: "",
+  email: "",
+  password: "",
+};
+
+interface Response {
+  message?: string;
+  error?: string;
+  user?: User;
+}
 
 export default function Signup() {
+  const [registerUser, setRegisterUser] = useState<RegisterUser>(defUser);
+  const router = useRouter();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setRegisterUser({ ...registerUser, [e.target.name]: e.target.value });
+  };
+
+  const handleRegister = async () => {
+    try {
+      const { email, name, password } = registerUser;
+
+      if (!email || !name || !password) return;
+
+      const response = await fetch("/api/register", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(registerUser),
+      });
+      const data: Response = await response.json();
+
+      await signIn("credentials", {
+        email: registerUser.email,
+        password: registerUser.password,
+        callbackUrl: "/dashboard",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className='mx-auto flex w-full max-w-sm flex-col gap-6 mt-10'>
       <div className='flex flex-col items-center'>
@@ -15,6 +65,9 @@ export default function Signup() {
             placeholder='Type here'
             type='email'
             className='input max-w-full'
+            value={registerUser.email}
+            name='email'
+            onChange={handleChange}
           />
         </div>
         <div className='form-field'>
@@ -24,6 +77,9 @@ export default function Signup() {
               placeholder='Type here'
               type='text'
               className='input max-w-full'
+              value={registerUser.name}
+              name='name'
+              onChange={handleChange}
             />
           </div>
         </div>
@@ -34,6 +90,9 @@ export default function Signup() {
               placeholder='Type here'
               type='password'
               className='input max-w-full'
+              name='password'
+              value={registerUser.password}
+              onChange={handleChange}
             />
           </div>
         </div>
@@ -50,7 +109,11 @@ export default function Signup() {
         </div>
         <div className='form-field pt-5'>
           <div className='form-control justify-between'>
-            <button type='button' className='btn btn-primary w-full'>
+            <button
+              type='button'
+              className='btn btn-primary w-full'
+              onClick={handleRegister}
+            >
               Sign up
             </button>
           </div>

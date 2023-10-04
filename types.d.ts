@@ -3,6 +3,12 @@ export interface LoginUser {
   password: string;
 }
 
+export interface RegisterUser {
+  name: string;
+  email: string;
+  password: string;
+}
+
 // Room
 // export interface Rooms {
 
